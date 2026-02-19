@@ -1,0 +1,250 @@
+<!DOCTYPE html>
+<html lang="{{ current_lang }}">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ content.hero_title }} | Exclusive Experience</title>
+    
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Prompt:wght@300;400;600&family=Playfair+Display:ital,wght@0,700;1,700&display=swap" rel="stylesheet">
+
+    <style>
+        :root {
+            --accent: #3b82f6;
+        }
+
+        body { font-family: 'Prompt', sans-serif; background-color: #0a0a0a; color: white; overflow-x: hidden; }
+        .font-serif { font-family: 'Playfair Display', serif; }
+
+        /* --- Custom Cursor --- */
+        #cursor {
+            width: 20px; height: 20px;
+            background: rgba(255,255,255,0.3);
+            border-radius: 50%;
+            position: fixed;
+            pointer-events: none;
+            z-index: 9999;
+            transition: transform 0.1s ease, background 0.3s ease;
+            backdrop-filter: invert(1);
+        }
+
+        /* --- Animated Background Particles --- */
+        .particles {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            z-index: -1; pointer-events: none;
+            background: radial-gradient(circle at 50% 50%, #1a1a1a 0%, #0a0a0a 100%);
+        }
+
+        /* --- Card Upgrade --- */
+        .card-container {
+            position: relative;
+            overflow: hidden;
+            border-radius: 3rem;
+            height: 600px;
+            border: 1px solid rgba(255,255,255,0.1);
+            background: #111;
+            transition: all 0.6s cubic-bezier(0.23, 1, 0.32, 1);
+        }
+
+        .card-container:hover {
+            transform: translateY(-15px) scale(1.02);
+            border-color: var(--accent);
+            box-shadow: 0 30px 60px rgba(0,0,0,0.5), 0 0 20px rgba(59, 130, 246, 0.2);
+        }
+
+        .card-container img {
+            width: 100%; height: 100%; object-fit: cover;
+            filter: grayscale(20%);
+            transition: transform 1.5s cubic-bezier(0.23, 1, 0.32, 1), filter 0.6s ease;
+        }
+
+        .card-container:hover img {
+            transform: scale(1.1);
+            filter: grayscale(0%);
+        }
+
+        /* --- Glass Overlay --- */
+        .card-overlay {
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(to top, rgba(0,0,0,0.9) 0%, rgba(0,0,0,0) 60%);
+            display: flex; flex-direction: column; justify-content: flex-end;
+            padding: 3rem;
+            opacity: 1;
+        }
+
+        .card-content {
+            transform: translateY(20px);
+            transition: transform 0.6s ease;
+        }
+
+        .card-container:hover .card-content {
+            transform: translateY(0);
+        }
+
+        /* --- Hero Section Parallax --- */
+        .hero-section {
+            height: 110vh;
+            background: linear-gradient(rgba(0,0,0,0.2), rgba(0,0,0,0.8)), 
+                        url('https://images.unsplash.com/photo-1502602898657-3e91760cbb34?q=80&w=2000');
+            background-size: cover;
+            background-position: center;
+            display: flex; align-items: center; justify-content: center;
+        }
+
+        /* --- Scroll Progress Bar --- */
+        #progress {
+            position: fixed; top: 0; left: 0; height: 4px; background: var(--accent);
+            z-index: 100; transition: width 0.1s ease;
+        }
+    </style>
+</head>
+<body>
+
+    <div id="cursor"></div>
+    <div id="progress"></div>
+    <div class="particles" id="scene"></div>
+
+    <nav class="fixed w-full z-[70] p-8 flex justify-between items-center transition-all duration-500" id="navbar">
+        <div class="text-white font-bold text-3xl tracking-tighter font-serif italic" id="logo">P.</div>
+        <div class="flex items-center gap-8">
+            <a href="/?lang={{ content.lang_val }}" class="group relative overflow-hidden bg-white/5 backdrop-blur-xl border border-white/10 px-8 py-3 rounded-full transition-all hover:border-blue-500">
+                <span class="relative z-10 font-medium text-sm tracking-widest">{{ content.lang_btn }}</span>
+                <div class="absolute inset-0 bg-blue-600 translate-y-full group-hover:translate-y-0 transition-transform duration-300"></div>
+            </a>
+        </div>
+    </nav>
+
+    <header class="hero-section relative">
+        <div class="text-center z-10 px-6">
+            <span class="inline-block mb-4 text-blue-400 font-semibold tracking-[0.5em] uppercase text-xs" data-aos="fade-down">Welcome to the future</span>
+            <h1 class="text-7xl md:text-[12rem] font-bold mb-6 tracking-tighter leading-none font-serif italic" data-aos="zoom-out" data-aos-duration="2000">
+                {{ content.hero_title }}
+            </h1>
+            <p class="text-lg md:text-2xl font-light opacity-70 tracking-[0.2em] max-w-2xl mx-auto" data-aos="fade-up" data-aos-delay="500">
+                {{ content.hero_sub }}
+            </p>
+        </div>
+        <div class="absolute bottom-12 left-1/2 -translate-x-1/2 flex flex-col items-center gap-4 opacity-30">
+            <div class="w-[1px] h-20 bg-gradient-to-b from-white to-transparent"></div>
+        </div>
+    </header>
+
+    <main class="relative z-10 bg-[#0a0a0a]">
+        <section class="max-w-[1400px] mx-auto py-40 px-8">
+            <div class="flex flex-col md:flex-row md:items-end justify-between mb-24 gap-8" data-aos="fade-up">
+                <div>
+                    <h2 class="text-6xl md:text-8xl font-bold tracking-tighter">{{ content.nav_places }}</h2>
+                </div>
+                <div class="text-blue-500 font-mono text-sm tracking-widest">/ 2026 EDITION</div>
+            </div>
+            
+            <div class="grid md:grid-cols-3 gap-12">
+                {% for place in content.destinations %}
+                <div class="card-container group" data-aos="fade-up" data-aos-delay="{{ loop.index0 * 200 }}" onmouseenter="expandCursor()" onmouseleave="shrinkCursor()">
+                    <img src="{{ place.img }}" alt="{{ place.name }}">
+                    <div class="card-overlay">
+                        <div class="card-content">
+                            <h3 class="text-white text-4xl font-bold mb-4 font-serif italic">{{ place.name }}</h3>
+                            <p class="text-white/60 text-lg mb-8 line-clamp-2 font-light">{{ place.desc }}</p>
+                            <button onclick="openModal(`{{ place.name }}`, `{{ place.long_desc }}`, `{{ place.img }}`)" 
+                                    class="group/btn flex items-center gap-4 text-white font-semibold tracking-widest text-xs uppercase transition-all">
+                                <span>Explore More</span>
+                                <div class="w-12 h-[1px] bg-white group-hover/btn:w-20 transition-all"></div>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+        </section>
+    </main>
+
+    <div id="infoModal" class="fixed inset-0 z-[100] invisible opacity-0 flex items-center justify-center p-6 transition-all duration-500">
+        <div class="absolute inset-0 bg-black/95 backdrop-blur-2xl" onclick="closeModal()"></div>
+        
+        <div id="modalBox" class="relative bg-[#111] w-full max-w-6xl rounded-[4rem] overflow-hidden shadow-[0_0_100px_rgba(0,0,0,1)] scale-90 opacity-0 border border-white/10">
+            <div class="grid md:grid-cols-2">
+                <div class="h-[400px] md:h-[700px] overflow-hidden">
+                    <img id="modalImg" src="" class="w-full h-full object-cover shadow-2xl">
+                </div>
+                <div class="p-12 md:p-20 flex flex-col justify-center relative">
+                    <button onclick="closeModal()" class="absolute top-10 right-10 text-white/30 hover:text-white transition">
+                        <svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M18 6L6 18M6 6l12 12"/></svg>
+                    </button>
+                    <h2 id="modalTitle" class="text-5xl md:text-7xl font-bold mb-8 font-serif italic tracking-tighter"></h2>
+                    <div class="w-20 h-1 bg-blue-600 mb-8"></div>
+                    <p id="modalDesc" class="text-white/60 text-xl leading-relaxed mb-12 font-light"></p>
+                    <button onclick="closeModal()" class="group flex items-center gap-6 text-white font-bold tracking-[0.3em] text-xs uppercase">
+                        <span class="bg-blue-600 px-10 py-5 rounded-full group-hover:bg-blue-700 transition-all shadow-xl shadow-blue-900/20">Close Journey</span>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <script>
+        AOS.init({ duration: 1200, once: false });
+
+        // --- Custom Cursor Logic ---
+        const cursor = document.getElementById('cursor');
+        document.addEventListener('mousemove', (e) => {
+            cursor.style.left = e.clientX + 'px';
+            cursor.style.top = e.clientY + 'px';
+        });
+
+        function expandCursor() { 
+            cursor.style.transform = 'scale(4)'; 
+            cursor.style.background = 'rgba(59, 130, 246, 0.2)';
+        }
+        function shrinkCursor() { 
+            cursor.style.transform = 'scale(1)'; 
+            cursor.style.background = 'rgba(255,255,255,0.3)';
+        }
+
+        // --- Scroll Progress ---
+        window.addEventListener('scroll', () => {
+            const progress = document.getElementById('progress');
+            const scrollPercent = (window.scrollY / (document.documentElement.scrollHeight - window.innerHeight)) * 100;
+            progress.style.width = scrollPercent + '%';
+
+            // Navbar Effect
+            const nav = document.getElementById('navbar');
+            if (window.scrollY > 100) {
+                nav.classList.add('bg-black/80', 'backdrop-blur-2xl', 'py-4');
+            } else {
+                nav.classList.remove('bg-black/80', 'backdrop-blur-2xl', 'py-4');
+            }
+        });
+
+        // --- Modal Logic ---
+        function openModal(title, desc, img) {
+            document.getElementById('modalTitle').innerText = title;
+            document.getElementById('modalDesc').innerText = desc;
+            document.getElementById('modalImg').src = img;
+            
+            const m = document.getElementById('infoModal');
+            const b = document.getElementById('modalBox');
+            m.classList.remove('invisible', 'opacity-0');
+            m.classList.add('visible', 'opacity-100');
+            b.classList.remove('scale-90', 'opacity-0');
+            b.classList.add('scale-100', 'opacity-100');
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeModal() {
+            const m = document.getElementById('infoModal');
+            const b = document.getElementById('modalBox');
+            b.classList.replace('scale-100', 'scale-90');
+            b.classList.add('opacity-0');
+            setTimeout(() => {
+                m.classList.replace('opacity-100', 'opacity-0');
+                m.classList.add('invisible');
+                document.body.style.overflow = 'auto';
+            }, 300);
+        }
+    </script>
+</body>
+</html>
